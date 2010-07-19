@@ -1,5 +1,3 @@
-Just enough files from the jQTouch distribution to get going with.
+== Study Lists
 
-See http://www.jqtouch.com/
-
-Make sure to load the jqt-init.js file last. See http://www.sofer.com/blog/jqtouch.html.
+A complete re-write of some of the ideas in RepeatCode.
