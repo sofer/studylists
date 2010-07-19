@@ -1,0 +1,16 @@
+#lesson
+  .toolbar
+    %h1
+      [Topic]
+    %a{ :href => "#", :class => "button leftButton goback" }
+      Go back
+  %ul.rounded
+    %li
+      #question
+    %li
+      #alert
+        touch or click to go
+    %li
+      #answer        
+      %form#response-form
+        =text_field_tag "response-field", nil, :autocomplete => "off"
