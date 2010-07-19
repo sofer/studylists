@@ -1,0 +1,10 @@
+!!!
+%html{:manifest => "cache.manifest"}
+  %meta{:content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;", :name => "viewport"}/
+  %head
+    %title Studylists
+    = stylesheet_link_tag "jqtouch.min.css", "theme.min.css", "scaffold.css", "application.css"
+    = javascript_include_tag "jquery.js",  "jqtouch.js", "application.js", "jqt-init.js"
+    = csrf_meta_tag
+  %body
+    = yield

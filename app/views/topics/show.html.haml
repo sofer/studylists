@@ -1,0 +1,13 @@
+%p
+  %b Name:
+  = @topic.name
+%p
+  %b Case sensitive:
+  = @topic.case_sensitive
+%p
+  %b Ignore punctuation:
+  = @topic.ignore_punctuation
+
+= link_to 'Edit', edit_topic_path(@topic)
+\|
+= link_to 'Back', topics_path

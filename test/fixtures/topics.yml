@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  case_sensitive: false
+  ignore_punctuation: MyString
+
+two:
+  name: MyString
+  case_sensitive: false
+  ignore_punctuation: MyString

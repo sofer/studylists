@@ -1,0 +1,19 @@
+= form_for @topic do |f|
+  -if @topic.errors.any?
+    #errorExplanation
+      %h2= "#{pluralize(@topic.errors.count, "error")} prohibited this topic from being saved:"
+      %ul
+        - @topic.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :case_sensitive
+    = f.check_box :case_sensitive
+  .field
+    = f.label :ignore_punctuation
+    = f.text_field :ignore_punctuation
+  .actions
+    = f.submit 'Save'
