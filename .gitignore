@@ -5,3 +5,5 @@ tmp/*
 tmp/**/*
 coverage/*
 coverage/**/*
+.bundle/*
+Gemlock.file
