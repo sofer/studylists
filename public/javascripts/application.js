@@ -1,5 +1,4 @@
 
-
 String.prototype.simplify = function () {
   return this.replace(/[,.!?\-\\']/g, '').toLowerCase();
 };
@@ -74,7 +73,7 @@ SL.getData = function() {
 
 SL.session = {
 
-  subjects: {}, //SL.getData(),
+  subjects: [], //SL.getData(),
   currentSubject: null,
   currentTopic: null,
   currentExercise: null,
@@ -84,10 +83,44 @@ SL.session = {
   previouslyIncorrect: false,
   finished: false,
   
+  updateCourseList: function() {
+    alert("Not yet implemented");
+  },
+  
   getCourses: function() {
-    //localStorage.setObject('subjects', SL.getData());
-    //var s = localStorage.getObject('subjects');
-    //alert(s["3"].topics["1"].name);  
+    //localStorage.removeItem('subjects');
+    this.subjects = localStorage.getObject('subjects');
+    if (this.subjects.length > 0) {
+      this.loadCourses();
+    } else {
+      this.getRemoteCourses();
+    }
+  },
+  
+  // json request
+  getRemoteCourses: function() {
+    var that = this;
+    jsonUrl = 'http://' + document.location.host + '/subjects.json';
+    $.ajax({
+      url: jsonUrl,
+      dataType: 'json',
+      error: function () {
+        alert("Failed to retrieve course list. Please try again later.");
+      },
+      success: function(json){
+        localStorage.setObject('subjects', json);
+        //that.getCourses();
+      }
+    });
+  },
+  
+  loadCourses: function() {
+    $("#courses ul").empty();
+    for (subject in this.subjects) {
+      var s = this.subjects[subject].subject;
+      var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
+      $("#courses ul").append(link);    
+    }
   },
   
   courseInfo: function(subjectId) {
@@ -122,33 +155,7 @@ SL.session = {
     this.stacks[0] = this.currentTopic.exercises;
     this.loadNextExercise();
   },
-  
-  // json request
-  getSubjects: function() {
-    var that = this;
-    jsonUrl = 'http://' + document.location.host + '/subjects.json';
-    $.ajax({
-      url: jsonUrl,
-      dataType: 'json',
-      error: function () {
-        alert("Failed to retrieve course list. Please try again later.");
-      },
-      success: function(json){
-        that.subjects = json;
-        that.loadCourses();
-      }
-    });
-  },
-  
-  loadCourses: function() {
-    $("#courses ul").empty();
-    for (subject in this.subjects) {
-      s = this.subjects[subject].subject;
-      var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
-      $("#courses ul").append(link);    
-    }
-  },
-  
+    
   loadTopics: function() {
     $("#topics ul").empty();
     for (topic in this.currentSubject.topics) {
@@ -291,27 +298,22 @@ SL.session = {
 
 jQuery(function() {
 
-  SL.session.getSubjects();
+  SL.session.getCourses();
   
-  // testing
-  //SL.session.preloadCourse("4");
-  //SL.session.preloadTopic("1");
-  //SL.test();
-
-  $(".course").live("tap click", function(){
+  $(".course").tap(function(){
     SL.session.preloadCourse($(this).attr("data"));
   });
 
-  $(".topic").live("tap click", function(){
+  $(".topic").tap(function(){
     SL.session.preloadTopic($(this).attr("data"));
   });
 
-  $("#get-courses").live("tap click", function(){
+  $("#update-course-list").tap(function(){
     SL.session.getCourses();
     return false;
   });
 
-  $("#lesson").live("tap click", function(){
+  $("#lesson").click(function(){
     SL.session.awaitResponse();
   });
 
