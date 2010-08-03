@@ -89,7 +89,7 @@ SL.session = {
   
   getCourses: function() {
     //localStorage.removeItem('subjects');
-    this.subjects = localStorage.getObject('subjects');
+    this.subjects = localStorage.getObject('subjects') || [];
     if (this.subjects.length > 0) {
       this.loadCourses();
     } else {
@@ -109,7 +109,7 @@ SL.session = {
       },
       success: function(json){
         localStorage.setObject('subjects', json);
-        //that.getCourses();
+        that.getCourses();
       }
     });
   },

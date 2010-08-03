@@ -1,14 +1,19 @@
 CACHE MANIFEST
-# Cache manifest version 0.0.3
+# Cache manifest version 0.0.5
 # All files to be cached go below
 
 images/icon.png
 images/startup.png
-javascripts/jquery.min.js
-javascripts/jqtouch.min.js
-javascripts/mobile.js
+javascripts/application.js
+javascripts/jqt-init.js
+javascripts/jqtouch.js
+javascripts/jquery.js
+
+stylesheets/application.css
 stylesheets/jqtouch.min.css
+stylesheets/scaffold.css
 stylesheets/theme.min.css
+
 stylesheets/img/loading.gif
 stylesheets/img/backButton.png
 stylesheets/img/chevron.png
@@ -32,8 +37,9 @@ NETWORK:
 # without the NETWORK declaration, no further resources can be downloaded when online
 # All URLs that start with the following lines
 # are whitelisted.
-http://localhost:3000/
-http://studylists.heroku.com/
-http://www.studylists.com/
-
+#http://localhost:3000/
+#http://10.0.1.2:3000/
+#http://studylists.heroku.com/
+#http://www.studylists.com/
+## NOT QUITE SURE IF I NEED THIS
  
