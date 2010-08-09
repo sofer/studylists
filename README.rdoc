@@ -1,3 +1,5 @@
 == Study Lists
 
 A complete re-write of some of the ideas in RepeatCode.
+
+Updated from clink st.
