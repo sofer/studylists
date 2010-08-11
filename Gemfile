@@ -26,7 +26,7 @@ gem 'rails', '3.0.0.rc'
 # group :test do
 #   gem 'webrat'
 # end
-gem "mongoid", ">=2.0.0.beta9"
+gem "mongoid", ">=2.0.0.beta.16"
 gem "bson_ext", ">=1.0.4"
 gem "haml"
 gem "inherited_resources"

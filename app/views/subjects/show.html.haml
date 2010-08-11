@@ -1,7 +1,15 @@
 %p
-  %b Name:
-  = @subject.name
+	%b Name:
+	= @subject.name
 
+%p
+	%b First topic:
+	= @subject.topics.first.name
+
+%p
+	%b First exercise:
+	= @subject.topics.first.exercises.first.phrase
+	
 = link_to 'Edit', edit_subject_path(@subject)
 \|
 = link_to 'Back', subjects_path
