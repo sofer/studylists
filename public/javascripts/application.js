@@ -118,8 +118,9 @@ SL.session = {
     $("#courses ul").empty();
     for (subject in this.subjects) {
       var s = this.subjects[subject].subject;
+      //var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
       var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
-      $("#courses ul").append(link);    
+      $("#courses ul").append(link);
     }
   },
   
