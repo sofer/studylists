@@ -116,8 +116,8 @@ SL.session = {
   
   loadCourses: function() {
     $("#courses ul").empty();
-    for (subject in this.subjects) {
-      var s = this.subjects[subject].subject;
+    for (var subject in this.subjects) {
+      var s = this.subjects[subject];
       //var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
       var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
       $("#courses ul").append(link);
@@ -125,8 +125,8 @@ SL.session = {
   },
   
   courseInfo: function(subjectId) {
-    if (this.subjects[subjectId].subject.topics) {
-      var topicCount = Object.size(this.subjects[subjectId].subject.topics);
+    if (this.subjects[subjectId].topics) {
+      var topicCount = Object.size(this.subjects[subjectId].topics);
       return "("+ topicCount + " topics) Check for updates";      
     } else {
       return "download now";
@@ -145,13 +145,13 @@ SL.session = {
   },
 
   preloadCourse: function(subjectId) {
-    this.currentSubject = this.subjects[subjectId].subject;
+    this.currentSubject = this.subjects[subjectId];
     $("#topics .toolbar h1").text(this.currentSubject.name);
     this.loadTopics();
   },
   
   preloadTopic: function(topicId) {
-    this.currentTopic = this.currentSubject.topics[topicId].topic;
+    this.currentTopic = this.currentSubject.topics[topicId];
     $("#lesson .toolbar h1").text(this.currentTopic.name);
     this.stacks[0] = this.currentTopic.exercises;
     this.loadNextExercise();
@@ -160,7 +160,7 @@ SL.session = {
   loadTopics: function() {
     $("#topics ul").empty();
     for (topic in this.currentSubject.topics) {
-      var link = this.updateLink("lesson", topic, this.currentSubject.topics[topic].topic.name, "(no description)", "topic");
+      var link = this.updateLink("lesson", topic, this.currentSubject.topics[topic].name, "(no description)", "topic");
       $("#topics ul").append(link);    
     }
   },
@@ -174,7 +174,7 @@ SL.session = {
     this.currentExercise = null;
     this.currentStack = 0;
     while ((this.currentStack < this.stackLimit) && (!this.currentExercise)) {
-      this.currentExercise = this.stacks[this.currentStack].shift().exercise;
+      this.currentExercise = this.stacks[this.currentStack].shift();
       if (!this.currentExercise) {
         this.currentStack++;
       }
