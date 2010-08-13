@@ -6,3 +6,4 @@ tmp/**/*
 coverage/*
 coverage/**/*
 .bundle/*
+relock/*
