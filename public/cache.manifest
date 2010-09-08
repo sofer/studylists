@@ -1,12 +1,13 @@
 CACHE MANIFEST
-# Cache manifest version 0.0.11
+# Cache manifest version 0.0.14
 # All files to be cached go below
-# Remember to comment out files under active development
+# Remember that updates here will only be picked up to comment out files under active development
+# See http://diveintohtml5.org/offline.html
 
-CACHE
+CACHE:
 images/icon.png
 images/startup.png
-#javascripts/application.js 
+javascripts/application.js 
 javascripts/jqt-init.js
 javascripts/jqtouch.js
 javascripts/jquery.js
@@ -34,15 +35,9 @@ stylesheets/img/on_off.png
 stylesheets/img/thumb.png
 stylesheets/img/toolButton.png
 
+FALLBACK:
+/
 
 NETWORK:
-# without the NETWORK declaration, no further resources can be downloaded when online
-# All URLs that start with the following lines
-# are whitelisted.
-# NOTE: these are MIGHT BE essential for doing AJAX stuff, like downloading new course material
-http://localhost:3000/
-#http://10.0.1.2:3000/
-#http://studylists.heroku.com/
-#http://www.studylists.com/
+*
 
-READ THIS: http://diveintohtml5.org/offline.html
