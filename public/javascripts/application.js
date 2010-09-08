@@ -1,3 +1,4 @@
+// cache testing: 1
 
 String.prototype.simplify = function () {
   return this.replace(/[,.!?\-\\']/g, '').toLowerCase();
@@ -100,7 +101,7 @@ SL.session = {
   // json request
   getRemoteCourses: function() {
     var that = this;
-    jsonUrl = 'http://' + document.location.host + '/subjects.json';
+    var jsonUrl = 'http://' + document.location.host + '/subjects.json';
     $.ajax({
       url: jsonUrl,
       dataType: 'json',
