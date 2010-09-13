@@ -1,4 +1,3 @@
-// cache testing: 6
 
 // Cache debugging. See http://jonathanstark.com/blog/2009/09/27/debugging-html-5-offline-application-cache/
 var cacheStatusValues = [];
@@ -162,12 +161,12 @@ SL.session = {
   },
   
   loadCourses: function() {
-    $("#courses ul").empty();
+    $("#courselist").empty();
     for (var subject in this.subjects) {
       var s = this.subjects[subject];
       //var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
       var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
-      $("#courses ul").append(link);
+      $("#courselist").append(link);
     }
   },
   
