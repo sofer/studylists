@@ -6,14 +6,19 @@
       Go back
   %ul.rounded
     %li
-      %a{ :href => "#courses" }
-        Test
-    %li
       #question
     %li
       #alert
-        touch or click to go
     %li
       #answer        
       %form#response-form
         =text_field_tag "response-field", nil, :autocomplete => "off"
+
+    %ul#keypad
+      %li#letterpad
+      
+      %li#go
+        %button{:type=>'button', :id=>'go'}Go
+        
+      %li#done
+        %button{:type=>'button'}Done

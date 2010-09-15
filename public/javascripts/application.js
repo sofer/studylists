@@ -1,5 +1,5 @@
 
-// Cache debugging. See http://jonathanstark.com/blog/2009/09/27/debugging-html-5-offline-application-cache/
+/*/ Cache debugging. See http://jonathanstark.com/blog/2009/09/27/debugging-html-5-offline-application-cache/
 var cacheStatusValues = [];
 cacheStatusValues[0] = 'uncached';
 cacheStatusValues[1] = 'idle';
@@ -42,8 +42,7 @@ window.applicationCache.addEventListener(
 );
 
 setInterval(function(){cache.update()}, 10000);
-//
-
+// END cache debugging */
 
 String.prototype.simplify = function () {
   return this.replace(/[,.!?\-\\']/g, '').toLowerCase();
@@ -108,7 +107,10 @@ SL.DOMnodes = {
   answer: '#answer',
   responseForm: '#response-form',
   responseField: '#response-field',
-  alert: "#alert" 
+  alert: "#alert",
+  letterpad: "#letterpad",
+  go: "#go",
+  done: "#done"
 }
 
 // careful with this. get from SLData while testing
@@ -128,6 +130,7 @@ SL.session = {
   stackLimit: 3, // 4 or more will cause breakage
   previouslyIncorrect: false,
   finished: false,
+  letterpad: true, // add this to course db eventually
   
   updateCourseList: function() {
     alert("Not yet implemented");
@@ -211,6 +214,18 @@ SL.session = {
     }
   },
   
+  generateLetterpad: function() {
+    $(SL.DOMnodes.letterpad).empty();
+    var keypadHTML = '';
+    var alphabet = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+    var az = alphabet.split('');
+    var phraseChars = this.currentExercise.response.split('');
+    for (var char in phraseChars) {
+      keypadHTML += '<button type="button" data-content="'+phraseChars[char].toUpperCase()+'">'+phraseChars[char].toUpperCase()+'</button>'
+    }
+    $(SL.DOMnodes.letterpad).html('<li>'+keypadHTML+'</li>');
+  },
+  
   loadNextExercise: function() {
     $(SL.DOMnodes.responseField).val('');
     this.previouslyIncorrect = false;
@@ -226,6 +241,7 @@ SL.session = {
       }
     }
     if (this.currentExercise) {
+      this.generateLetterpad();
       $(SL.DOMnodes.question).html(this.currentExercise.phrase);
       if (this.currentStack == 0) {
         this.showAnswer();
@@ -247,18 +263,28 @@ SL.session = {
     $(SL.DOMnodes.alert).show().fadeOut(1000);
   },
   
+  toggleKeys: function() {
+    $(SL.DOMnodes.letterpad).toggle();
+    $(SL.DOMnodes.done).toggle();
+    $(SL.DOMnodes.go).toggle();      
+    
+  },
+  
   showAnswer: function() {
     $(SL.DOMnodes.responseField).hide();
     $(SL.DOMnodes.answer).show();
     $(SL.DOMnodes.answer).text(this.currentExercise.response);
-    $(SL.DOMnodes.tryNow).focus();
+    this.toggleKeys();
+    //$(SL.DOMnodes.tryNow).focus();
     //this.showResponseMessage('touch or click to go', 'go')
   },
   
   awaitResponse: function() {
-    //$(SL.DOMnodes.formattedResponse).val('');
     $(SL.DOMnodes.alert).hide();
     $(SL.DOMnodes.answer).hide();
+    if (this.letterpad) {
+      this.toggleKeys();
+    }
     $(SL.DOMnodes.responseField).val('');
     $(SL.DOMnodes.responseField).removeClass('incorrect');
     $(SL.DOMnodes.responseField).show();
@@ -353,6 +379,8 @@ jQuery(function() {
 
   $(".topic").tap(function(){
     SL.session.preloadTopic($(this).attr("data"));
+    $(SL.DOMnodes.letterpad).hide();
+    $(SL.DOMnodes.done).hide();
   });
 
   $("#update-course-list").tap(function(){
@@ -360,8 +388,18 @@ jQuery(function() {
     return false;
   });
 
-  $("#lesson").click(function(){
+  $("#letterpad button").tap(function(){
+    newResponse = $(SL.DOMnodes.responseField).val() + $(this).attr("data-content").toLowerCase();
+    $(SL.DOMnodes.responseField).val(newResponse);
+  });
+
+  $("#go button").click(function(){
     SL.session.awaitResponse();
+  });
+
+  $("#done button").click(function(){
+    var response = $(SL.DOMnodes.responseField).val();
+    SL.session.checkResponse(response);
   });
 
   $("#response-form").submit(function(){
