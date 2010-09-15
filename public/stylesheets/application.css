@@ -19,20 +19,15 @@
     -webkit-border-image: url(img/toolButton.png) 0 5 0 5;
 }
 
-/**
- * iPhone keyboard with CSS3
- * @author Lea Verou (http://leaverou.me)
- * @version 1.0
- * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
- */
+ /* thanks to Lea Verou (http://leaverou.me) */
  
 @font-face {
 	font-family: 'iPhone keyboard';
 	src: url(iphone-keyboard.ttf);
 }
 
-#iphone-keyboard {
-	max-width:480px;
+#xiphone-keyboard {
+	max-width:320px;	
 	margin:10px auto;
 	padding:0;
 	overflow:hidden;
@@ -47,6 +42,22 @@
 	-webkit-box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
 }
 
+#iphone-keyboard {
+	/*max-width:320px;	
+	margin:10px auto;
+	padding:0;
+	overflow:hidden;
+	/*border-top:1px solid #3A3D42;
+	background:#757D8A;
+	background-image:-moz-linear-gradient(#9098A3, #454f5d);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#9098A3), to(#454f5d));
+	
+	box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
+	-moz-box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
+	-webkit-box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
+  */
+}
+
 	#iphone-keyboard li {
 		text-align:center;
 		margin:.5em .1em .25em;
@@ -54,7 +65,8 @@
 	}
 	
 	#iphone-keyboard li:first-child {
-		margin-top:.3em;
+		/*margin-top:1em;*/
+		margin-top:.7em;
 	}
 	
 	#iphone-keyboard button,
@@ -84,9 +96,12 @@
 	
 	#iphone-keyboard button {
 		display:inline-block;
-		width:8.6%;
+		/*width:8.6%;
 		margin:0 .25%;
-		padding:.02em 0 .03em;
+		padding:.02em 0 .03em;*/
+		width:8.25%;
+		padding:.16em 0;
+		
 		
 		color:black;
 		
@@ -162,56 +177,3 @@
 		float:right;
 		width:18.9%;
 	}
-
-/*
- * Styles for the narrow keyboard
- */
- 
-@media screen and (max-width: 479px) {
-	#iphone-keyboard {
-		max-width:320px;	
-	}
-	
-	#iphone-keyboard li {
-		margin-top:1em;
-	}
-	
-	#iphone-keyboard li:first-child {
-		margin-top:.7em;
-	}
-	
-		#iphone-keyboard button {
-			width:8.25%;
-			padding:.16em 0;
-		}
-		
-		#iphone-keyboard button.space,
-		#iphone-keyboard button.return,
-		#iphone-keyboard button.numbers,
-		#iphone-keyboard button.international {
-			padding:.4em 0;
-		}
-		
-		#iphone-keyboard button.backspace {
-			width:12%;
-			padding-left:0;
-		}
-		
-		#iphone-keyboard button.numbers {
-			width:11%;	
-		}
-		
-		#iphone-keyboard button.international {
-			width:11%;
-			padding:.38em 0;
-		}
-		
-		#iphone-keyboard button.space {
-			width:48%;
-		}
-		
-		#iphone-keyboard button.return {
-			width:24%;
-		}
-}
-
