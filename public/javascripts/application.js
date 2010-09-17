@@ -44,6 +44,20 @@ window.applicationCache.addEventListener(
 setInterval(function(){cache.update()}, 10000);
 // END cache debugging */
 
+// thanks to http://www.shamasis.net/2009/09/fast-algorithm-to-find-unique-items-in-javascript-array/
+Array.prototype.unique = function() {
+    var o = {}, i, l = this.length, r = [];
+    for(i=0; i<l;i++) o[this[i]] = this[i];
+    for(i in o) r.push(o[i]);
+    return r;
+};
+String.prototype.unique = function() {
+    var i, h = {}, s = '';
+    for (i=0; i<this.length; i++) h[this.charAt(i)] = this.charAt(i);
+    for (i in h) s += h[i];
+    return s; 
+};
+
 String.prototype.simplify = function () {
   return this.replace(/[,.!?\-\\']/g, '').toLowerCase();
 };
@@ -214,14 +228,34 @@ SL.session = {
     }
   },
   
+  // generate a selection of keys based on a phrase and a selection of other letters
+  generateKeys: function(keyCount, phrase) {
+    var keyChars       = 'qazwxedcrfvtgbyhnujmikolp';  //by keyboard location
+    var randomishChars = 'eairtonslcupmdhgbyfvwkxzqj';  //by English-language frequency
+    var chars = phrase.unique();                       
+    var i = 0;
+    while (chars.length < keyCount) {
+      var char = randomishChars[i % randomishChars.length]; // in case we get to the end
+      if (!chars.match(char)) {
+        if (Math.round(Math.random())) { // random true/false
+          chars += char;
+        }
+      }
+      i++;
+    }
+    var keys = ''
+    for (i=0; i<keyChars.length; i++) {
+      if (chars.match(keyChars.charAt(i))) keys+=keyChars.charAt(i);
+    }
+    return keys;
+  },
+
   generateLetterpad: function() {
     $(SL.DOMnodes.letterpad).empty();
     var keypadHTML = '';
-    var alphabet = 'QWERTYUIOPASDFGHJKLZXCVBNM';
-    var az = alphabet.split('');
-    var phraseChars = this.currentExercise.response.split('');
-    for (var char in phraseChars) {
-      keypadHTML += '<button type="button" data-content="'+phraseChars[char].toUpperCase()+'">'+phraseChars[char].toUpperCase()+'</button>'
+    var chars = this.generateKeys(8, this.currentExercise.response);
+    for (var i=0; i<chars.length; i++) {
+      keypadHTML += '<button type="button" data-content="'+chars.charAt(i)+'">'+chars.charAt(i).toUpperCase()+'</button>'
     }
     $(SL.DOMnodes.letterpad).html('<li>'+keypadHTML+'</li>');
   },
