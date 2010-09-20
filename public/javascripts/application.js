@@ -251,13 +251,14 @@ SL.session = {
   },
 
   generateLetterpad: function() {
-    $(SL.DOMnodes.letterpad).empty();
+    //$(SL.DOMnodes.letterpad).empty();
     var keypadHTML = '';
     var chars = this.generateKeys(8, this.currentExercise.response);
     for (var i=0; i<chars.length; i++) {
       keypadHTML += '<button type="button" data-content="'+chars.charAt(i)+'">'+chars.charAt(i).toUpperCase()+'</button>'
     }
-    $(SL.DOMnodes.letterpad).html('<li>'+keypadHTML+'</li>');
+    //$(SL.DOMnodes.letterpad).html(keypadHTML);
+    $(SL.DOMnodes.letterpad).append(keypadHTML);
   },
   
   loadNextExercise: function() {
@@ -322,7 +323,7 @@ SL.session = {
     $(SL.DOMnodes.responseField).val('');
     $(SL.DOMnodes.responseField).removeClass('incorrect');
     $(SL.DOMnodes.responseField).show();
-    $(SL.DOMnodes.responseField).focus();
+    //$(SL.DOMnodes.responseField).focus(); //don't want iphone keyboard appearing
   },
   
   tryAgain: function () {
@@ -422,9 +423,13 @@ jQuery(function() {
     return false;
   });
 
-  $("#letterpad button").tap(function(){
+  $("#letterpad button").click(function(){
     newResponse = $(SL.DOMnodes.responseField).val() + $(this).attr("data-content").toLowerCase();
     $(SL.DOMnodes.responseField).val(newResponse);
+  });
+
+  $("#test button").click(function(){
+    alert("test");
   });
 
   $("#go button").click(function(){
