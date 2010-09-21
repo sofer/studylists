@@ -5,9 +5,10 @@ Studylists::Application.routes.draw do |map|
 
   resources :subjects
 
-  root :to => 'mobile#index'
+  root :to => 'sencha#index'
 
   get "mobile/index"
+  get "sencha/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
