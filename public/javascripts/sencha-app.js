@@ -27,10 +27,7 @@ Ext.setup({
           },
           store: store
       });
-
-
-
-
-
     }
+
 });
+
