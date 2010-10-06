@@ -25,7 +25,7 @@ Ext.setup({
                   scroll: 'both'
               });
           },
-          store: store
+          //store: store
       });
     }
 
