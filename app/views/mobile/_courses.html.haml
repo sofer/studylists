@@ -1,10 +1,10 @@
-#courses.current
-  .toolbar
+#courses{"data-role" => "page"}
+  %div{"data-role" => "header"}
     %h1
       Study Lists
-    %a{ :href => "#", :class => "button rightButton", :id => "update-course-list" }
+    %a{:href => "#", :class => "button rightButton", :id => "update-course-list"}
       More
-  %ul#courselist.rounded
+  #courselist{"data-role" => "content" }
 
   =render "footer"
   

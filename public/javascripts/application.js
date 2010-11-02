@@ -117,6 +117,8 @@ Storage.prototype.getObject = function(key) {
 var SL = {}
 
 SL.DOMnodes = {
+  courses: '#courses',
+  courselist: '#courselist',
   question: '#question',
   answer: '#answer',
   responseForm: '#response-form',
@@ -178,13 +180,21 @@ SL.session = {
   },
   
   loadCourses: function() {
-    $("#courselist").empty();
+    var newlist = '<ul data-role="listview">'
     for (var subject in this.subjects) {
       var s = this.subjects[subject];
       //var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
-      var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
-      $("#courselist").append(link);
+      //$("#courselist").append(link);
+      newlist += '<li><a href="#">French</a></li>';
     }
+    newlist += '</ul>';
+    $("#courselist ul").remove();  // remove the existing ul    
+    $("#courselist").html(newlist);
+    
+    //reload jquery list elements
+    //$("#courselist").refresh();
+    $('div#courses').page();
+    //$('#courselist').listview();
   },
   
   courseInfo: function(subjectId) {

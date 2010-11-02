@@ -5,7 +5,7 @@ Studylists::Application.routes.draw do |map|
 
   resources :subjects
 
-  root :to => 'sencha#index'
+  root :to => 'mobile#index'
 
   get "mobile/index"
   get "sencha/index"

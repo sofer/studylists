@@ -4,8 +4,13 @@
   %head
     %meta{:content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;", :name => "viewport"}/
     %title Studylists
-    = stylesheet_link_tag "jqtouch.min.css", "theme.min.css", "scaffold.css", "application.css"
-    = javascript_include_tag "jquery.js",  "jqtouch.js", "application.js", "jqt-init.js"
+    = stylesheet_link_tag "http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css"
+    / javascript_include_tag "http://code.jquery.com/jquery-1.4.3.min.js"
+    / javascript_include_tag "http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"
+    / currently hard-wired the latest build of jquery.mobile into the app - 2010-11-02
+    = javascript_include_tag "jquery.mobile.js"
+    = stylesheet_link_tag "scaffold.css", "xapplication.css"
+    = javascript_include_tag "application.js"
     = csrf_meta_tag
   %body
     = yield
