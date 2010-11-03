@@ -192,8 +192,8 @@ SL.session = {
     $("#courselist").html(newlist);
     
     //reload jquery list elements
-    //$("#courselist").refresh();
-    $('div#courses').page();
+    $("#courselist ul").refresh();
+    //$('div#courses').page();
     //$('#courselist').listview();
   },
   
