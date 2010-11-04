@@ -180,16 +180,18 @@ SL.session = {
   },
   
   loadCourses: function() {
-    var newlist = '<ul data-role="listview">'
+    //var newlist = '<ul data-role="listview">'
+    $("#courselist ul").remove();  // remove the existing ul    
+    $("#courselist").add('ul').attr('data-role', 'listview');  // add a new one        
     for (var subject in this.subjects) {
       var s = this.subjects[subject];
+      $("#courselist ul").add('li').add('a').attr('href', '#').text('French');
       //var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
       //$("#courselist").append(link);
-      newlist += '<li><a href="#">French</a></li>';
+      //newlist += '<li><a href="#">French</a></li>';
     }
-    newlist += '</ul>';
-    $("#courselist ul").remove();  // remove the existing ul    
-    $("#courselist").html(newlist);
+    //newlist += '</ul>';
+    //$("#courselist").html(newlist);
     
     //reload jquery list elements
     //$("#courselist ul").refresh(); NOT WORKING
