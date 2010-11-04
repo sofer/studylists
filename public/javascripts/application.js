@@ -180,19 +180,18 @@ SL.session = {
   },
   
   loadCourses: function() {
-    //var newlist = '<ul data-role="listview">'
-    $("#courselist ul").remove();  // remove the existing ul    
-    $("#courselist").add('ul').attr('data-role', 'listview');  // add a new one        
-    for (var subject in this.subjects) {
-      var s = this.subjects[subject];
-      $("#courselist ul").add('li').add('a').attr('href', '#').text('French');
-      //var link = this.updateLink("topics", subject, s.name, this.courseInfo(subject), "course");
-      //$("#courselist").append(link);
-      //newlist += '<li><a href="#">French</a></li>';
+    $("#courselist ul").remove();
+    $("#courselist").append('<ul data-role="listview"/>');
+    //for (var subject in this.subjects) { ITERATING THROUGH AN OBJECT SEEMS TO BE A PROBLEM
+    for (var i=0;i<this.subjects.length;i++) {
+      var s = this.subjects[i];
+      var link = $('<a>').attr({
+        href: '#topics',
+        data: i,
+        class: 'course'
+      });
+      $("#courselist ul").append($('<li>').append(link.text(s.name)));
     }
-    //newlist += '</ul>';
-    //$("#courselist").html(newlist);
-    
     //reload jquery list elements
     //$("#courselist ul").refresh(); NOT WORKING
     $('#courselist ul').listview(); //WORKS!
@@ -207,17 +206,6 @@ SL.session = {
     }
   },
   
-  // slightly silly way of doing this
-  updateLink: function(page, id, title, info, klass) {
-    var item = $("#link-template").html();
-    item = item.replace( /\[page\]/g,  page);
-    item = item.replace( /\[id\]/g,  id);
-    item = item.replace( /\[title\]/g,  title);
-    item = item.replace( /\[info\]/g,  info);
-    item = item.replace( /\[class\]/g,  klass);
-    return item;
-  },
-
   preloadCourse: function(subjectId) {
     this.currentSubject = this.subjects[subjectId];
     $("#topics .toolbar h1").text(this.currentSubject.name);
@@ -232,11 +220,17 @@ SL.session = {
   },
     
   loadTopics: function() {
-    $("#topics ul").empty();
-    for (topic in this.currentSubject.topics) {
-      var link = this.updateLink("lesson", topic, this.currentSubject.topics[topic].name, "(no description)", "topic");
-      $("#topics ul").append(link);    
+    $("#topiclist ul").remove();
+    $("#topiclist").append('<ul data-role="listview"/>');
+    for (var i=0;i<this.currentSubject.topics.length;i++) {
+      var link = $('<a>').attr({
+        href: '#lesson',
+        data: i,
+        class: 'topic'
+      });
+      $("#topiclist ul").append($('<li>').append(link.text(this.currentSubject.topics[i].name)));
     }
+    $('#topiclist ul').listview(); 
   },
   
   // generate a selection of keys based on a phrase and a selection of other letters

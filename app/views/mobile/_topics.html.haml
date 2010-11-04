@@ -1,8 +1,9 @@
-#topics
-  .toolbar
+#topics{"data-role" => "page"}
+  %div{"data-role" => "header"}
     %h1
       [Subject]
     %a{ :href => "#", :class => "button leftButton goback" }
       Go back
-  %ul.rounded
+  #topiclist{"data-role" => "content" }
+  
   =render "footer"
