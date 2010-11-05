@@ -1,9 +1,9 @@
-#courses{"data-role" => "page"}
+#courses{"data-role" => "page", "data-theme" => "b"}
   %div{"data-role" => "header"}
     %h1
       Study Lists
-    %a{:href => "#", "data-role" => "button", "data-icon" => "refresh", :id => "update-course-list"}
-      More
+    %a{:href => "#", "data-role" => "button", "data-icon" => "refresh", "data-iconpos" => "right", :class => "ui-btn-right", :id => "update-course-list"}
+      Refresh
   #courselist{"data-role" => "content" }
 
   =render "footer"
