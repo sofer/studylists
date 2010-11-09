@@ -185,12 +185,15 @@ SL.session = {
     //for (var subject in this.subjects) { ITERATING THROUGH AN OBJECT SEEMS TO BE A PROBLEM
     for (var i=0;i<this.subjects.length;i++) {
       var s = this.subjects[i];
-      var link = $('<a>').attr({
-        href: '#topics',
+      var li = $('<li>').attr({
         data: i,
         class: 'course'
       });
-      $("#courselist ul").append($('<li>').append(link.text(s.name)));
+      
+      var link = $('<a>').attr({
+        href: '#topics',
+      });
+      $("#courselist ul").append(li.append(link.text(s.name)));
     }
     //reload jquery list elements
     //$("#courselist ul").refresh(); NOT WORKING
@@ -208,7 +211,7 @@ SL.session = {
   
   preloadCourse: function(subjectId) {
     this.currentSubject = this.subjects[subjectId];
-    $("#topics .toolbar h1").text(this.currentSubject.name);
+    $("#topics h1").text(this.currentSubject.name);
     this.loadTopics();
   },
   
