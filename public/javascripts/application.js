@@ -147,6 +147,7 @@ SL.session = {
   previouslyIncorrect: false,
   finished: false,
   letterpad: true, // add this to course db eventually
+  answerVisible: false,
   
   updateCourseList: function() {
     alert("Not yet implemented");
@@ -217,7 +218,7 @@ SL.session = {
   
   preloadTopic: function(topicId) {
     this.currentTopic = this.currentSubject.topics[topicId];
-    $("#lesson .toolbar h1").text(this.currentTopic.name);
+    $("#lesson h1").text(this.currentTopic.name);
     this.stacks[0] = this.currentTopic.exercises;
     this.loadNextExercise();
   },
@@ -226,14 +227,19 @@ SL.session = {
     $("#topiclist ul").remove();
     $("#topiclist").append('<ul data-role="listview"/>');
     for (var i=0;i<this.currentSubject.topics.length;i++) {
-      var link = $('<a>').attr({
-        href: '#lesson',
+      var li = $('<li>').attr({
+        //href: '#lesson',
         data: i,
         class: 'topic'
       });
-      $("#topiclist ul").append($('<li>').append(link.text(this.currentSubject.topics[i].name)));
+      var link = $('<a>').attr({
+        href: '#lesson'
+        //data: i,
+        //class: 'topic'
+      });
+      $("#topiclist ul").append(li.append(link.text(this.currentSubject.topics[i].name)));
     }
-    $('#topiclist ul').listview(); 
+    $('#topiclist ul').listview();
   },
   
   // generate a selection of keys based on a phrase and a selection of other letters
@@ -259,14 +265,21 @@ SL.session = {
   },
 
   generateLetterpad: function() {
-    //$(SL.DOMnodes.letterpad).empty();
-    var keypadHTML = '';
+    $(SL.DOMnodes.letterpad).empty();
+    var letters = $('div').attr({
+      "data-inline": "true"
+    });
     var chars = this.generateKeys(8, this.currentExercise.response);
     for (var i=0; i<chars.length; i++) {
-      keypadHTML += '<button type="button" data-content="'+chars.charAt(i)+'">'+chars.charAt(i).toUpperCase()+'</button>'
+      var key = $('<div>').attr({
+        "data-role": "button",
+        "data-content": chars.charAt(i),
+      });
+      //letters.append(key.text(chars.charAt(i).toUpperCase()));
+      // += '<div data-role="button" "data-content="' + chars.charAt(i) + '">' + chars.charAt(i).toUpperCase() + '</div>'
     }
     //$(SL.DOMnodes.letterpad).html(keypadHTML);
-    $(SL.DOMnodes.letterpad).append(keypadHTML);
+    //$(SL.DOMnodes.letterpad).append(letters);
   },
   
   loadNextExercise: function() {
@@ -314,6 +327,7 @@ SL.session = {
   },
   
   showAnswer: function() {
+    this.answerVisible = true;
     $(SL.DOMnodes.responseField).hide();
     $(SL.DOMnodes.answer).show();
     $(SL.DOMnodes.answer).text(this.currentExercise.response);
@@ -323,15 +337,18 @@ SL.session = {
   },
   
   awaitResponse: function() {
-    $(SL.DOMnodes.alert).hide();
-    $(SL.DOMnodes.answer).hide();
-    if (this.letterpad) {
-      this.toggleKeys();
+    if (this.answerVisible) {
+      this.answerVisible = true;
+      $(SL.DOMnodes.alert).hide();
+      $(SL.DOMnodes.answer).hide();
+      if (this.letterpad) {
+        this.toggleKeys();
+      }
+      $(SL.DOMnodes.responseField).val('');
+      $(SL.DOMnodes.responseField).removeClass('incorrect');
+      $(SL.DOMnodes.responseField).show();
+      //$(SL.DOMnodes.responseField).focus(); //don't want iphone keyboard appearing
     }
-    $(SL.DOMnodes.responseField).val('');
-    $(SL.DOMnodes.responseField).removeClass('incorrect');
-    $(SL.DOMnodes.responseField).show();
-    //$(SL.DOMnodes.responseField).focus(); //don't want iphone keyboard appearing
   },
   
   tryAgain: function () {
@@ -416,28 +433,31 @@ jQuery(function() {
 
   SL.session.getCourses();
   
-  $(".course").tap(function(){
+  // 2010-11-09: Now using live(), because click and tap do not appear to be binding correctly
+  // see http://forum.jquery.com/topic/mobile-events-documentation
+
+  $("#update-course-list").click(function(){
+    SL.session.getCourses();
+    return false;
+  });
+
+  $(".course").live('click tap', function(){
     SL.session.preloadCourse($(this).attr("data"));
   });
 
-  $(".topic").tap(function(){
+  $(".topic").live('click tap', function(){
     SL.session.preloadTopic($(this).attr("data"));
     $(SL.DOMnodes.letterpad).hide();
     $(SL.DOMnodes.done).hide();
   });
 
-  $("#update-course-list").tap(function(){
-    SL.session.getCourses();
-    return false;
+  $("#lesson").bind('click tap', function(){
+    SL.session.awaitResponse();
   });
 
   $("#letterpad button").click(function(){
     newResponse = $(SL.DOMnodes.responseField).val() + $(this).attr("data-content").toLowerCase();
     $(SL.DOMnodes.responseField).val(newResponse);
-  });
-
-  $("#test button").click(function(){
-    alert("test");
   });
 
   $("#go button").click(function(){
