@@ -124,7 +124,6 @@ SL.DOMnodes = {
   responseForm: '#response-form',
   responseField: '#response-field',
   alert: "#alert",
-  letterpad: "#letterpad",
   go: "#go",
   done: "#done"
 }
@@ -146,7 +145,7 @@ SL.session = {
   stackLimit: 3, // 4 or more will cause breakage
   previouslyIncorrect: false,
   finished: false,
-  letterpad: true, // add this to course db eventually
+  keypad: true, // add this to course db eventually
   answerVisible: false,
   
   updateCourseList: function() {
@@ -262,7 +261,7 @@ SL.session = {
   },
 
   // using a jquery template, which doesn't play nicely with mobile
-  generateLetterpad: function() {
+  generateKeypad: function() {
     $('#keys').empty();
     var chars = this.generateKeys(8, this.currentExercise.response);
     for (var i=0; i<chars.length; i++) {
@@ -285,7 +284,7 @@ SL.session = {
       }
     }
     if (this.currentExercise) {
-      this.generateLetterpad();
+      this.generateKeypad();
       $(SL.DOMnodes.question).html(this.currentExercise.phrase);
       if (this.currentStack == 0) {
         this.showAnswer();
@@ -308,10 +307,13 @@ SL.session = {
   },
   
   toggleKeys: function() {
-    $(SL.DOMnodes.letterpad).toggle();
+    $('#keys').toggle();
     $(SL.DOMnodes.done).toggle();
-    $(SL.DOMnodes.go).toggle();      
-    
+    $(SL.DOMnodes.go).toggle();
+  },
+  
+  updateResponse: function(char) {
+    $('#answer').append(char);
   },
   
   showAnswer: function() {
@@ -326,10 +328,10 @@ SL.session = {
   
   awaitResponse: function() {
     if (this.answerVisible) {
-      this.answerVisible = true;
-      $(SL.DOMnodes.alert).hide();
-      $(SL.DOMnodes.answer).hide();
-      if (this.letterpad) {
+      this.answerVisible = false;
+      //$(SL.DOMnodes.alert).hide();
+      $(SL.DOMnodes.answer).empty();
+      if (this.keypad) {
         this.toggleKeys();
       }
       $(SL.DOMnodes.responseField).val('');
@@ -435,17 +437,17 @@ jQuery(function() {
 
   $(".topic").live('click tap', function(){
     SL.session.preloadTopic($(this).attr("data"));
-    $(SL.DOMnodes.letterpad).hide();
+    $('#keys').hide();
     $(SL.DOMnodes.done).hide();
+  });
+
+  $("#keys a").live('click tap', function(){
+    SL.session.updateResponse($(this).attr("data-content"));
+    return false;
   });
 
   $("#lesson").bind('click tap', function(){
     SL.session.awaitResponse();
-  });
-
-  $("#letterpad button").click(function(){
-    newResponse = $(SL.DOMnodes.responseField).val() + $(this).attr("data-content").toLowerCase();
-    $(SL.DOMnodes.responseField).val(newResponse);
   });
 
   $("#go button").click(function(){
