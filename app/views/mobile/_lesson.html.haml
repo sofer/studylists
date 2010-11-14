@@ -1,26 +1,24 @@
 #lesson{"data-role" => "page", "data-theme" => "b"}
   %div{"data-role" => "header"}
     %h1
-  %div{"data-role" => "content" }
-    %ul{"data-role" => "listview"}
+  %div{"data-role" => "content", :id => "exercise" }
+    %ul{"data-role" => "listview", :id => "qa"}
       %li
         #question
       %li
-        #alert
-      %li
-        #answer        
-      %li
-        %form#response-form
-          =text_field_tag "response-field", nil, :autocomplete => "off"
+        #answer
+      //%li
+      //%form#response-form
+      //=text_field_tag "response-field", nil, :autocomplete => "off"
 
-    %ul#keypad
-      %li#letterpad
-      
-      %li#go
-        %button{:type=>'button'}Go
+    %br
+
+    %div{:id => "keys"}
+
+  %script#keyTemplate{:type => "text/x-jquery-tmpl"}
+    %a.ui-btn.ui-btn-up-b.ui-btn-inline.ui-btn-corner-all.ui-shadow{"data-content" => "${id}", "data-inline" => "true", "data-role" => "button", "data-theme" => "b"}
+      %span.ui-btn-inner.ui-btn-corner-all
+        %span.ui-btn-text ${text}
         
-      %li#done
-        %button{:type=>'button'}Done
-
   =render "footer"
 

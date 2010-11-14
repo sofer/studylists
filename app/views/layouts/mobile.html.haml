@@ -5,11 +5,12 @@
     %meta{:content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;", :name => "viewport"}/
     %title Studylists
     / currently hard-wired the latest build of jquery.mobile into the app - 2010-11-02
-    = stylesheet_link_tag "http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css"
-    / javascript_include_tag "http://code.jquery.com/jquery-1.4.3.min.js"
-    / javascript_include_tag "http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"
-    = javascript_include_tag "jquery.mobile.js"
-    = stylesheet_link_tag "xapplication.css"
+    / UPDATE: trying 1.0a2 - 2010-11-14
+    = stylesheet_link_tag "http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css"
+    = javascript_include_tag "http://code.jquery.com/jquery-1.4.4.min.js"
+    = javascript_include_tag "http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"
+    = javascript_include_tag "http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"
+    /= javascript_include_tag "jquery.mobile.js"
     = javascript_include_tag "application.js"
     = csrf_meta_tag
   %body

@@ -183,7 +183,6 @@ SL.session = {
   loadCourses: function() {
     $("#courselist ul").remove();
     $("#courselist").append('<ul data-role="listview"/>');
-    //for (var subject in this.subjects) { ITERATING THROUGH AN OBJECT SEEMS TO BE A PROBLEM
     for (var i=0;i<this.subjects.length;i++) {
       var s = this.subjects[i];
       var li = $('<li>').attr({
@@ -196,9 +195,7 @@ SL.session = {
       });
       $("#courselist ul").append(li.append(link.text(s.name)));
     }
-    //reload jquery list elements
-    //$("#courselist ul").refresh(); NOT WORKING
-    $('#courselist ul').listview(); //WORKS!
+    $('#courselist ul').listview();
   },
   
   courseInfo: function(subjectId) {
@@ -264,22 +261,13 @@ SL.session = {
     return keys;
   },
 
+  // using a jquery template, which doesn't play nicely with mobile
   generateLetterpad: function() {
-    $(SL.DOMnodes.letterpad).empty();
-    var letters = $('div').attr({
-      "data-inline": "true"
-    });
+    $('#keys').empty();
     var chars = this.generateKeys(8, this.currentExercise.response);
     for (var i=0; i<chars.length; i++) {
-      var key = $('<div>').attr({
-        "data-role": "button",
-        "data-content": chars.charAt(i),
-      });
-      //letters.append(key.text(chars.charAt(i).toUpperCase()));
-      // += '<div data-role="button" "data-content="' + chars.charAt(i) + '">' + chars.charAt(i).toUpperCase() + '</div>'
+      $('#keyTemplate').tmpl({id: chars.charAt(i), text: chars.charAt(i).toUpperCase()}).appendTo('#keys');
     }
-    //$(SL.DOMnodes.letterpad).html(keypadHTML);
-    //$(SL.DOMnodes.letterpad).append(letters);
   },
   
   loadNextExercise: function() {
