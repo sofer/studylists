@@ -454,22 +454,22 @@ jQuery(function() {
 
   $("#keys a").live('click tap', function(){
     SL.session.updateResponse($(this).attr("data-content"));
-    return false;
+    //return false;
   });
 
   $("#space").live('click tap', function(){
     SL.session.updateResponse(' ');
-    return false;
+    //return false;
   });
 
   $("#undo").live('click tap', function(){
     SL.session.undo();
-    return false;
+    //return false;
   });
 
   $("#done").live('click tap', function(){
     SL.session.checkResponse();
-    return false;
+    //return false;
   });
 
   $("#go button").click(function(){
