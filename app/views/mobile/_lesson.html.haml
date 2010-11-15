@@ -13,10 +13,16 @@
 
     %br
 
-    %div{:id => "keys"}
+    %div{:id => "keypad"}
+      %div{:id => "keys"}
 
+      %div
+        %a{:href => '#', "data-inline" => "true", "data-role" => "button", "data-theme" => "a", "data-icon" => "arrow-l", "id" => "undo"}Undo
+        %a{:href => '#', "data-inline" => "true", "data-role" => "button", "data-theme" => "a", "id" => "space"}Space
+        %a{:href => '#', "data-inline" => "true", "data-role" => "button", "data-theme" => "b", "data-icon" => "check", "id" => "done"}Done
+        
   %script#keyTemplate{:type => "text/x-jquery-tmpl"}
-    %a.ui-btn.ui-btn-up-b.ui-btn-inline.ui-btn-corner-all.ui-shadow{"data-content" => "${id}", "data-inline" => "true", "data-role" => "button", "data-theme" => "b", :href => '#'}
+    %a.ui-btn.ui-btn-up-b.ui-btn-inline.ui-btn-corner-all.ui-shadow{:href => '#', "data-content" => "${id}", "data-inline" => "true", "data-role" => "button", "data-theme" => "a"}
       %span.ui-btn-inner.ui-btn-corner-all
         %span.ui-btn-text ${text}
         

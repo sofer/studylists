@@ -270,7 +270,8 @@ SL.session = {
   },
   
   loadNextExercise: function() {
-    $(SL.DOMnodes.responseField).val('');
+    //$(SL.DOMnodes.responseField).val('');
+    $('#answer').empty();
     this.previouslyIncorrect = false;
     if (this.currentExercise && this.currentStack < this.stackLimit) {
       this.stacks[this.currentStack+1].push(this.currentExercise);
@@ -307,18 +308,23 @@ SL.session = {
   },
   
   toggleKeys: function() {
-    $('#keys').toggle();
-    $(SL.DOMnodes.done).toggle();
-    $(SL.DOMnodes.go).toggle();
+    $('#keypad').toggle();
+    //$(SL.DOMnodes.done).toggle();
+    //$(SL.DOMnodes.go).toggle();
   },
   
   updateResponse: function(char) {
     $('#answer').append(char);
   },
   
+  undo: function() {
+    var truncated = $('#answer').text().slice(0,-1);
+    $('#answer').text(truncated);
+  },
+  
   showAnswer: function() {
     this.answerVisible = true;
-    $(SL.DOMnodes.responseField).hide();
+    //$(SL.DOMnodes.responseField).hide();
     $(SL.DOMnodes.answer).show();
     $(SL.DOMnodes.answer).text(this.currentExercise.response);
     this.toggleKeys();
@@ -342,15 +348,15 @@ SL.session = {
   },
   
   tryAgain: function () {
-    $(SL.DOMnodes.responseField).addClass('incorrect');
+    //$(SL.DOMnodes.responseField).addClass('incorrect');
     this.previouslyIncorrect = true; // allow one re-try
-    this.showResponseMessage('Try again', 'go');
-    $(SL.DOMnodes.responseField).focus();
+    //this.showResponseMessage('Try again', 'go');
+    //$(SL.DOMnodes.responseField).focus();
   },
   
   wrong: function () {
     this.stacks[0].unshift(this.currentExercise);
-    this.showResponseMessage('check and try again','stop');
+    //this.showResponseMessage('check and try again','stop');
     this.loadNextExercise();
   },
   
@@ -360,13 +366,14 @@ SL.session = {
     this.loadNextExercise();
   },
   
-  checkResponse: function (response) {
+  checkResponse: function () {
+    var response = $('#answer').text();
     if (this.finished === true) {
       return false;
     }
     response = response.stripExtraSpaces();
     if (response === '') {
-      this.showResponseMessage('enter a response','go');
+      //this.showResponseMessage('enter a response','go');
       this.awaitResponse();
       return false;
     }
@@ -437,8 +444,12 @@ jQuery(function() {
 
   $(".topic").live('click tap', function(){
     SL.session.preloadTopic($(this).attr("data"));
-    $('#keys').hide();
-    $(SL.DOMnodes.done).hide();
+    $('#keypad').hide();
+    //$(SL.DOMnodes.done).hide();
+  });
+
+  $("#lesson").bind('click tap', function(){
+    SL.session.awaitResponse();
   });
 
   $("#keys a").live('click tap', function(){
@@ -446,8 +457,19 @@ jQuery(function() {
     return false;
   });
 
-  $("#lesson").bind('click tap', function(){
-    SL.session.awaitResponse();
+  $("#space").live('click tap', function(){
+    SL.session.updateResponse(' ');
+    return false;
+  });
+
+  $("#undo").live('click tap', function(){
+    SL.session.undo();
+    return false;
+  });
+
+  $("#done").live('click tap', function(){
+    SL.session.checkResponse();
+    return false;
   });
 
   $("#go button").click(function(){
