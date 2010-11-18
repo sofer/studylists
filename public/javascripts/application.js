@@ -185,8 +185,8 @@ SL.session = {
     for (var i=0;i<this.subjects.length;i++) {
       var s = this.subjects[i];
       var li = $('<li>').attr({
-        data: i,
-        class: 'course'
+        'data': i,
+        'class': 'course'
       });
       
       var link = $('<a>').attr({
@@ -225,8 +225,8 @@ SL.session = {
     for (var i=0;i<this.currentSubject.topics.length;i++) {
       var li = $('<li>').attr({
         //href: '#lesson',
-        data: i,
-        class: 'topic'
+        'data': i,
+        'class': 'topic'
       });
       var link = $('<a>').attr({
         href: '#lesson'
@@ -302,11 +302,17 @@ SL.session = {
   },
   
   showResponseMessage: function(message,klass) {
-    $(SL.DOMnodes.alert).addClass(klass);
-    $(SL.DOMnodes.alert).text(message);
-    $(SL.DOMnodes.alert).show().fadeOut(1000);
+    //$(SL.DOMnodes.alert).addClass(klass);
+    $('#message').text(message);
+    $('#lesson').addClass("ui-loading")
+                .delay(20)
+                .fadeout(20, function(){
+                  $('#lesson').removeClass("ui-loading");
+                });
+    
+    //window.setTimeout('$("#lesson").removeClass("ui-loading");', 500);
   },
-  
+
   toggleKeys: function() {
     $('#keypad').toggle();
     //$(SL.DOMnodes.done).toggle();
@@ -329,7 +335,7 @@ SL.session = {
     $(SL.DOMnodes.answer).text(this.currentExercise.response);
     this.toggleKeys();
     //$(SL.DOMnodes.tryNow).focus();
-    //this.showResponseMessage('touch or click to go', 'go')
+    this.showResponseMessage('touch or click to go', 'go')
   },
   
   awaitResponse: function() {
@@ -350,13 +356,13 @@ SL.session = {
   tryAgain: function () {
     //$(SL.DOMnodes.responseField).addClass('incorrect');
     this.previouslyIncorrect = true; // allow one re-try
-    //this.showResponseMessage('Try again', 'go');
+    this.showResponseMessage('Try again', 'go');
     //$(SL.DOMnodes.responseField).focus();
   },
   
   wrong: function () {
     this.stacks[0].unshift(this.currentExercise);
-    //this.showResponseMessage('check and try again','stop');
+    this.showResponseMessage('check and try again','stop');
     this.loadNextExercise();
   },
   
@@ -373,7 +379,7 @@ SL.session = {
     }
     response = response.stripExtraSpaces();
     if (response === '') {
-      //this.showResponseMessage('enter a response','go');
+      this.showResponseMessage('enter a response','go');
       this.awaitResponse();
       return false;
     }
@@ -445,7 +451,6 @@ jQuery(function() {
   $(".topic").live('click tap', function(){
     SL.session.preloadTopic($(this).attr("data"));
     $('#keypad').hide();
-    //$(SL.DOMnodes.done).hide();
   });
 
   $("#lesson").bind('click tap', function(){
@@ -454,22 +459,18 @@ jQuery(function() {
 
   $("#keys a").live('click tap', function(){
     SL.session.updateResponse($(this).attr("data-content"));
-    //return false;
   });
 
   $("#space").live('click tap', function(){
     SL.session.updateResponse(' ');
-    //return false;
   });
 
   $("#undo").live('click tap', function(){
     SL.session.undo();
-    //return false;
   });
 
   $("#done").live('click tap', function(){
     SL.session.checkResponse();
-    //return false;
   });
 
   $("#go button").click(function(){

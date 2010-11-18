@@ -10,7 +10,7 @@ CACHE MANIFEST
 CACHE:
 images/icon.png
 images/startup.png
-javascripts/application.js 
+//javascripts/application.js 
 javascripts/jqt-init.js
 javascripts/jqtouch.js
 javascripts/jquery.js
